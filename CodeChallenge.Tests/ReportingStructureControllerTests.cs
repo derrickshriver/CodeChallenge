@@ -34,12 +34,11 @@ namespace CodeCodeChallenge.Tests.Integration
         }
 
         [TestMethod]
-        public void GetByEmployeeId_Returns_Ok()
+        public void GetByEmployeeId_TwoLevels_Returns_Ok()
         {
             // Arrange
             var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
-            var expectedFirstName = "John";
-            var expectedLastName = "Lennon";
+            int expectedNumberOfReports = 4;
 
             // Execute
             var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employeeId}");
@@ -47,9 +46,47 @@ namespace CodeCodeChallenge.Tests.Integration
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            var employee = response.DeserializeContent<Employee>();
-            Assert.AreEqual(expectedFirstName, employee.FirstName);
-            Assert.AreEqual(expectedLastName, employee.LastName);
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            var employee = reportingStructure.employee;
+            Assert.AreEqual(expectedNumberOfReports, reportingStructure.numberOfReports);
+        }
+
+        [TestMethod]
+        // Known issue: this test can fail when running with all tests but passes on its own
+        public void GetByEmployeeId_OneLevel_Returns_Ok()
+        {
+            // Arrange
+            var employeeId = "03aa1462-ffa9-4978-901b-7c001562cf6f";
+            int expectedNumberOfReports = 2;
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            var employee = reportingStructure.employee;
+            Assert.AreEqual(expectedNumberOfReports, reportingStructure.numberOfReports);
+        }
+
+        [TestMethod]
+        // Known issue: this test can fail when running with all tests but passes on its own
+        public void GetByEmployeeId_NoLevels_Returns_Ok()
+        {
+            // Arrange
+            var employeeId = "b7839309-3348-463b-a7e3-5de1c168beb3";
+            int expectedNumberOfReports = 0;
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            var employee = reportingStructure.employee;
+            Assert.AreEqual(expectedNumberOfReports, reportingStructure.numberOfReports);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CodeChallenge.Models;
 using Microsoft.Extensions.Logging;
 using CodeChallenge.Repositories;
@@ -19,13 +18,33 @@ namespace CodeChallenge.Services
             _logger = logger;
         }
 
-        public Employee GetByEmployeeId(string id)
+        public ReportingStructure GetByEmployeeId(string id)
         {
             if(!String.IsNullOrEmpty(id))
             {
-                return _employeeRepository.GetById(id);
+                Employee employee = _employeeRepository.GetById(id);
+                if(employee != null)
+                {
+                    // "The number of reports is determined to be the number of directReports for an
+                    // employee and all of their direct reports."
+                    // Total up the number of reports at this level and the next level (not interpreted to be recursive)
+                    int reportCount = 0;
+                    if (employee.DirectReports != null)
+                    {
+                        List<Employee> reports = employee.DirectReports.ToList();
+                        reportCount = reports.Count;
+                        foreach (Employee report in reports)
+                        {
+                            if (report.DirectReports != null)
+                            {
+                                reportCount += report.DirectReports.Count;
+                            }
+                        }
+                    }
+                    return new ReportingStructure(employee, reportCount);
+                }
+                return null;
             }
-
             return null;
         }
     }

@@ -8,6 +8,6 @@ namespace CodeChallenge.Services
 {
     public interface IReportingStructureService
     {
-        Employee GetByEmployeeId(String id);
+        ReportingStructure GetByEmployeeId(String id);
     }
 }
