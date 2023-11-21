@@ -1,0 +1,20 @@
+﻿[
+  {
+    "compensationId": "33cd4a1c-b3f9-4cbd-b73d-351e17e1ab21",
+    "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
+    "salary": "99.95",
+    "effectiveDate": "1965-07-26T00:00:00+00:00"
+  },
+  {
+    "compensationId": "29bb3c02-f629-482d-9727-62cd1a275888",
+    "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
+    "salary": "99000.95",
+    "effectiveDate": "1969-07-26T00:00:00+00:00"
+  },
+  {
+    "compensationId": "89cfc7cd-adef-4fbc-97e3-7cd895e85c03",
+    "employeeId": "b7839309-3348-463b-a7e3-5de1c168beb3",
+    "salary": "100",
+    "effectiveDate": "1965-07-26T00:00:00+00:00"
+  }
+]
