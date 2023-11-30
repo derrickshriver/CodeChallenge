@@ -27,7 +27,7 @@ namespace CodeChallenge.Services
                 {
                     // "The number of reports is determined to be the number of directReports for an
                     // employee and all of their direct reports."
-                    // Total up the number of reports at this level and the next level (not interpreted to be recursive)
+                    // Total up the number of reports recursively
                     int reportCount = 0;
                     if (employee.DirectReports != null)
                     {
@@ -37,7 +37,11 @@ namespace CodeChallenge.Services
                         {
                             if (report.DirectReports != null)
                             {
-                                reportCount += report.DirectReports.Count;
+                                ReportingStructure reportingStructure = GetByEmployeeId(report.EmployeeId);
+                                if (reportingStructure is not null)
+                                {
+                                    reportCount += reportingStructure.numberOfReports;
+                                }
                             }
                         }
                     }

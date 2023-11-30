@@ -34,11 +34,31 @@ namespace CodeCodeChallenge.Tests.Integration
         }
 
         [TestMethod]
-        public void GetByEmployeeId_TwoLevels_Returns_Ok()
+        // Known issue: this test can fail when running with all tests but passes on its own
+        public void GetByEmployeeId_ThreeLevels_Returns_Ok()
         {
             // Arrange
             var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
-            int expectedNumberOfReports = 4;
+            int expectedNumberOfReports = 5;
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            var employee = reportingStructure.employee;
+            Assert.AreEqual(expectedNumberOfReports, reportingStructure.numberOfReports);
+        }
+
+        [TestMethod]
+        // Known issue: this test can fail when running with all tests but passes on its own
+        public void GetByEmployeeId_TwoLevels_Returns_Ok()
+        {
+            // Arrange
+            var employeeId = "03aa1462-ffa9-4978-901b-7c001562cf6f";
+            int expectedNumberOfReports = 3;
 
             // Execute
             var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employeeId}");
@@ -56,8 +76,8 @@ namespace CodeCodeChallenge.Tests.Integration
         public void GetByEmployeeId_OneLevel_Returns_Ok()
         {
             // Arrange
-            var employeeId = "03aa1462-ffa9-4978-901b-7c001562cf6f";
-            int expectedNumberOfReports = 2;
+            var employeeId = "c0c2293d-16bd-4603-8e08-638a9d18b22c";
+            int expectedNumberOfReports = 1;
 
             // Execute
             var getRequestTask = _httpClient.GetAsync($"api/reportingstructure/{employeeId}");

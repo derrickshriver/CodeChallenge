@@ -22,6 +22,13 @@
     "department": "Engineering"
   },
   {
+    "employeeId": "86babf1f-4c40-4332-ac5b-5b2a73aa1ee3",
+    "firstName": "Chas",
+    "lastName": "Newby",
+    "position": "Contractor",
+    "department": "Engineering"
+  },
+  {
     "employeeId": "03aa1462-ffa9-4978-901b-7c001562cf6f",
     "firstName": "Ringo",
     "lastName": "Starr",
@@ -48,6 +55,11 @@
     "firstName": "George",
     "lastName": "Harrison",
     "position": "Developer III",
-    "department": "Engineering"
+    "department": "Engineering",
+    "directReports": [
+      {
+        "employeeId": "86babf1f-4c40-4332-ac5b-5b2a73aa1ee3"
+      }
+    ]
   }
 ]

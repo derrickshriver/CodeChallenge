@@ -44,9 +44,6 @@ namespace CodeChallenge.Repositories
                 .OrderByDescending(x => x.effectiveDate)
                 .FirstOrDefault();
 
-            // Cause things to populate
-            var thing = _employeeContext.Compensations.ToList();
-
             return compensation; 
         }
 
